@@ -1,17 +1,27 @@
 package io.github.abonitatibus3.springboottrains.model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Route {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String trainNo;
     private BigDecimal firstClassPrice;
     private BigDecimal secondClassPrice;
 
     // relationships
+    @OneToMany(mappedBy = "route")
     private Set<Stop> stops;
+
+    @OneToMany
+    private Set<Review> review;
 
     public Route(String trainNo, BigDecimal firstClassPrice, BigDecimal secondClassPrice, Set<Stop> stops) {
         this.trainNo = trainNo;

@@ -1,16 +1,27 @@
 package io.github.abonitatibus3.springboottrains.model;
 
+import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Customer extends User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String email;
     private boolean isStudent;
 
     // relationships
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Review> reviews;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<PaymentInfo> paymentInfos;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "customer")
     private Set<Reservation> reservations;
 
     public Customer() {

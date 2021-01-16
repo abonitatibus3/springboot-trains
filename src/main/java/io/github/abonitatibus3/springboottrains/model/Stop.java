@@ -1,37 +1,42 @@
 package io.github.abonitatibus3.springboottrains.model;
 
+import javax.persistence.*;
 import java.time.LocalTime;
-import java.util.HashSet;
-import java.util.Set;
 
+@Entity
 public class Stop {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
     private LocalTime arrivalTime;
     private LocalTime departureTime;
 
     // relationships
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Station station;
-    private Set<Route> routes;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Route route;
 
     public Stop() {
-        this.routes = new HashSet<>();
     }
 
     public Stop(String name, LocalTime arrivalTime, LocalTime departureTime, Station station) {
-        this();
         this.name = name;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
         this.station = station;
     }
 
-    public Stop(String name, LocalTime arrivalTime, LocalTime departureTime, Station station, Set<Route> routes) {
+    public Stop(String name, LocalTime arrivalTime, LocalTime departureTime, Station station, Route route) {
         this.name = name;
         this.arrivalTime = arrivalTime;
         this.departureTime = departureTime;
         this.station = station;
-        this.routes = routes;
+        this.route = route;
     }
 
     public String getName() {
@@ -64,5 +69,13 @@ public class Stop {
 
     public void setStation(Station station) {
         this.station = station;
+    }
+
+    public Route getRoute() {
+        return route;
+    }
+
+    public void setRoute(Route route) {
+        this.route = route;
     }
 }

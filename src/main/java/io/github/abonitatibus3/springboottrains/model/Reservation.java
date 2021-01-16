@@ -1,17 +1,28 @@
 package io.github.abonitatibus3.springboottrains.model;
 
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
+@Entity
 public class Reservation {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String reservationID;
     private BigDecimal price;
 
     // relationships
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "reservation")
     private Set<Ticket> tickets;
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
+
+    @OneToOne
     private PaymentInfo paymentInfo;
 
 

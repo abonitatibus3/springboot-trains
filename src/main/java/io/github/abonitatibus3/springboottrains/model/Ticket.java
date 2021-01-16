@@ -1,17 +1,30 @@
 package io.github.abonitatibus3.springboottrains.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class Ticket {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String passengerName;
     private LocalDate departureDate;
     private int bags;
 
     // relationships
+    @ManyToOne(fetch = FetchType.LAZY)
     private Reservation reservation;
+
+    @OneToOne
     private Route route;
+
+    @OneToOne
     private Station departureStation;
+
+    @OneToOne
     private Station arrivalStation;
 
     public Ticket(Reservation reservation, String passengerName, LocalDate departureDate, Route route, Station departureStation, Station arrivalStation, int bags) {

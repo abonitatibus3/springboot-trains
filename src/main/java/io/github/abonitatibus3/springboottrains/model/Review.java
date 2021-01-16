@@ -1,14 +1,23 @@
 package io.github.abonitatibus3.springboottrains.model;
 
+import javax.persistence.*;
+
+@Entity
 public class Review {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private Integer reviewNumber;
     private String comment;
     private Rating rating;
 
     // relationships
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
+
+    @ManyToOne
     private Route route;
 
     public Review(Customer customer, Integer reviewNumber, String comment, Rating rating, Route route) {

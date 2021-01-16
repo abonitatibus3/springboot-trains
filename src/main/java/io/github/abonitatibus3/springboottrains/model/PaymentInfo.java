@@ -1,8 +1,14 @@
 package io.github.abonitatibus3.springboottrains.model;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 public class PaymentInfo {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String cardNumber;
     private String cvv;
@@ -10,6 +16,7 @@ public class PaymentInfo {
     private String name;
 
     //relationships
+    @ManyToOne(fetch = FetchType.LAZY)
     private Customer customer;
 
     public PaymentInfo(Customer customer, String cardNumber, String cvv, LocalDate expirationDate, String name) {
